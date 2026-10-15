@@ -1,0 +1,17 @@
+Resources:
+  Function:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs22.x
+      Role: arn:aws:iam::222222222222:role/execution
+      Code:
+        ZipFile: 'exports.handler = async () => ({ statusCode: 200 })'
+      VpcConfig:
+        SubnetIds: []
+        SecurityGroupIds: []
+  ImportedParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value: !ImportValue SharedVpcId

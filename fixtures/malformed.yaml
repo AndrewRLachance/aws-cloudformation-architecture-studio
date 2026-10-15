@@ -1,0 +1,5 @@
+Resources:
+  Broken:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags: [one, two

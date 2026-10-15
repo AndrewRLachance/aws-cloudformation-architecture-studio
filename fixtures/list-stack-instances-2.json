@@ -1,0 +1,6 @@
+{
+  "Summaries": [
+    {"StackSetId":"security-baseline:1234","Account":"222222222222","Region":"us-east-1","Status":"CURRENT","DriftStatus":"IN_SYNC"},
+    {"StackSetId":"security-baseline:1234","Account":"333333333333","Region":"us-west-2","Status":"OUTDATED","DriftStatus":"DRIFTED"}
+  ]
+}

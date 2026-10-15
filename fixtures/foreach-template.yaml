@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::LanguageExtensions
+Parameters:
+  BucketNames:
+    Type: CommaDelimitedList
+    Default:
+      - Alpha
+      - Beta
+Resources:
+  Fn::ForEach::Buckets:
+    - BucketName
+    - !Ref BucketNames
+    - ${BucketName}Bucket:
+        Type: AWS::S3::Bucket
+        Properties:
+          BucketName: !Sub '${BucketName}-data'
+  Fn::ForEach::Outer:
+    - Prefix
+    - [One]
+    - Fn::ForEach::Inner${Prefix}:
+        - Suffix
+        - [A, B]
+        - ${Prefix}${Suffix}Bucket:
+            Type: AWS::S3::Bucket
+Outputs:
+  Fn::ForEach::BucketOutputs:
+    - BucketName
+    - [Alpha, Beta]
+    - ${BucketName}Name:
+        Value: !Ref ${BucketName}Bucket

@@ -1,0 +1,6 @@
+{
+  "region": "us-east-1",
+  "version": "257.0.0",
+  "source": "https://d1uauaxba7bl26.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json",
+  "sha256": "fe59da71f18d6e5cb8c52e62c6cbac37fd5a109aa2bcbf9d388cc083bc159136"
+}

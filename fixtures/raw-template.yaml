@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: YAML intrinsic coverage
+Transform: AWS::LanguageExtensions
+Parameters:
+  Environment:
+    Type: String
+    Default: test
+Mappings:
+  Regions:
+    us-east-1: { Ami: ami-123 }
+Conditions:
+  IsProd: !Equals [!Ref Environment, prod]
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Select [0, !Cidr [10.0.0.0/16, 2, 8]]
+  Subnet:
+    Type: AWS::EC2::Subnet
+    Condition: IsProd
+    Properties:
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: !FindInMap [Regions, !Ref 'AWS::Region', Ami]
+  Topic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${Environment}-${AWS::Region}-topic'
+      DisplayName: !Join ['-', [!Ref Environment, topic]]
+  Queue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !If [IsProd, prod-queue, test-queue]
+      Tags:
+        - Key: Split
+          Value: !Select [0, !Split [',', 'a,b']]
+        - Key: Import
+          Value: !ImportValue SharedValue
+        - Key: Base64
+          Value: !Base64 hello
+        - Key: And
+          Value: !And [!Condition IsProd, !Not [!Equals [a, b]]]
+        - Key: Or
+          Value: !Or [!Condition IsProd, !Equals [a, a]]
+        - Key: Transform
+          Value: !Transform { Name: AWS::Include, Parameters: { Location: sample } }
+  Subscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref Topic
+      Endpoint: !GetAtt Queue.Arn
+      Protocol: sqs
+  LanguageExtension:
+    Type: Custom::Unknown
+    Properties:
+      Loop:
+        Fn::ForEach::Buckets:
+          - Identifier
+          - [A, B]
+          - Name: !Sub '${Identifier}-bucket'
+Outputs:
+  TopicArn:
+    Value: !GetAtt Topic.Arn

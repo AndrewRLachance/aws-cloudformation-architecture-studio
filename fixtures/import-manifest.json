@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "templates": [
+    {"filename":"network.yaml","stackId":"network","stackName":"network","accountId":"111111111111","region":"us-east-1","exports":["SharedVpcId"]},
+    {"filename":"app.yaml","stackId":"app","stackName":"app","accountId":"222222222222","region":"us-east-1","importConsumers":["SharedVpcId"]}
+  ]
+}

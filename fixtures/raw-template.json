@@ -1,0 +1,11 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "JSON fixture",
+  "Parameters": { "VpcId": { "Type": "AWS::EC2::VPC::Id" } },
+  "Resources": {
+    "Bucket": { "Type": "AWS::S3::Bucket", "Properties": { "BucketName": { "Fn::Sub": "${AWS::StackName}-assets" } } },
+    "Function": { "Type": "AWS::Lambda::Function", "DependsOn": "Bucket", "Properties": { "Role": { "Fn::GetAtt": ["Role", "Arn"] }, "Code": { "ZipFile": "exports.handler=async()=>{}" }, "Handler": "index.handler", "Runtime": "nodejs22.x" } },
+    "Role": { "Type": "AWS::IAM::Role", "Properties": { "AssumeRolePolicyDocument": { "Version": "2012-10-17", "Statement": [] } } }
+  },
+  "Outputs": { "BucketName": { "Value": { "Ref": "Bucket" }, "Export": { "Name": "FixtureBucket" } } }
+}

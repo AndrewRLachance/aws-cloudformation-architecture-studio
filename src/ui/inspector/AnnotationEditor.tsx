@@ -1,0 +1,8 @@
+import { useState } from 'react';
+import type { DiagramNode, NodeAnnotation } from '../../domain/types';
+import { uniqueId } from '../../domain/ids';
+
+export function AnnotationEditor({ node, onChange }: { readonly node: DiagramNode; readonly onChange: (annotations: readonly NodeAnnotation[]) => void }) {
+  const [label, setLabel] = useState(''); const [body, setBody] = useState(''); const [tone, setTone] = useState<NodeAnnotation['tone']>('info'); const [color, setColor] = useState('#527fff');
+  return <fieldset className="annotation-editor"><legend>Annotations</legend>{node.annotations.map((annotation) => <div key={annotation.id} className="annotation-row"><span style={{ borderColor: annotation.color }}>{annotation.label}</span><button type="button" onClick={() => onChange(node.annotations.filter((item) => item.id !== annotation.id))}>Remove</button></div>)}<label>Label<input value={label} onChange={(event) => setLabel(event.target.value)} /></label><label>Details<textarea value={body} onChange={(event) => setBody(event.target.value)} /></label><label>Tone<select value={tone} onChange={(event) => setTone(event.target.value as NodeAnnotation['tone'])}><option value="info">Info</option><option value="success">Success</option><option value="warning">Warning</option><option value="critical">Critical</option><option value="neutral">Neutral</option></select></label><label>Color<input type="color" value={color} onChange={(event) => setColor(event.target.value)} /></label><button type="button" disabled={!label.trim()} onClick={() => { onChange([...node.annotations, { id: uniqueId('annotation'), label: label.trim(), ...(body.trim() ? { body: body.trim() } : {}), tone, color }]); setLabel(''); setBody(''); }}>Add annotation</button></fieldset>;
+}

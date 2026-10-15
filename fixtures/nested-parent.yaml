@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  ChildApplication:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://example.invalid/child.yaml
+      Parameters:
+        Environment: production
+  ChildOutputMirror:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value: !GetAtt ChildApplication.Outputs.BucketName

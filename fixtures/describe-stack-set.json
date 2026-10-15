@@ -1,0 +1,7 @@
+{
+  "StackSet": {
+    "StackSetName": "security-baseline",
+    "StackSetId": "security-baseline:1234",
+    "PermissionModel": "SERVICE_MANAGED"
+  }
+}

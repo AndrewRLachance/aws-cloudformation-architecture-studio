@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "templates": [
+    {"filename":"nested-parent.yaml","stackId":"parent","stackName":"parent","accountId":"222222222222","region":"us-east-1"},
+    {"filename":"nested-child.yaml","stackId":"child","stackName":"child","accountId":"222222222222","region":"us-east-1","parentStackId":"parent"}
+  ]
+}

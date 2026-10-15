@@ -1,0 +1,10 @@
+{
+  "Stacks": [{
+    "StackId": "arn:aws:cloudformation:us-east-1:222222222222:stack/app/abc",
+    "StackName": "app",
+    "StackStatus": "CREATE_COMPLETE",
+    "Parameters": [{"ParameterKey":"Environment","ParameterValue":"production"}],
+    "Outputs": [{"OutputKey":"BucketName","OutputValue":"app-assets"}],
+    "Tags": [{"Key":"Environment","Value":"production"}]
+  }]
+}

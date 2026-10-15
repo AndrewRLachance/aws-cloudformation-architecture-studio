@@ -1,0 +1,7 @@
+{
+  "Summaries": [
+    {"StackSetId":"security-baseline:1234","Account":"111111111111","Region":"us-east-1","Status":"CURRENT","DriftStatus":"IN_SYNC"},
+    {"StackSetId":"security-baseline:1234","Account":"222222222222","Region":"us-east-1","Status":"CURRENT","DriftStatus":"IN_SYNC"}
+  ],
+  "NextToken": "page-2"
+}
